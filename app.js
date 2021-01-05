@@ -1,4 +1,4 @@
-document.querySelector('button').addEventListener('click', () => {
+const createRow = (datum) => {
     const newRow = document.createElement('tr')
 
     const initiative = document.createElement('td');
@@ -22,6 +22,37 @@ document.querySelector('button').addEventListener('click', () => {
     newRow.appendChild(name);
     newRow.appendChild(notes);
 
-    document.querySelector('table').appendChild(newRow);
+    if(datum){
+        initiativeInput.value = datum.initiative;
+        nameInput.value = datum.name;
+        notesInput.value = datum.notes;
+    }
 
+    document.querySelector('table').appendChild(newRow);
+}
+
+document.querySelector('#new').addEventListener('click', () => {
+    createRow();
 })
+
+document.querySelector('#sort').addEventListener('click', () => {
+    const rows = document.querySelectorAll('tr');
+    const data = [];
+
+    for(let row of rows) {
+        const initiative = row.querySelector('input[type="number"]').value;
+        const name = row.querySelector('input[type="text"]').value;
+        const notes = row.querySelector('textarea').value;
+        const datum = { initiative, name, notes };
+        data.push(datum);
+    }
+
+    const sortedData = data.sort((datum1, datum2) => {
+        return datum1.initiative - datum2.initiative;
+    });
+
+    document.querySelector('table').innerHTML = "";
+    for(let datum of sortedData){
+        createRow(datum)
+    }
+});
