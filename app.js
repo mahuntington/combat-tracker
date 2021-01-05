@@ -28,7 +28,7 @@ const createRow = (datum) => {
         notesInput.value = datum.notes;
     }
 
-    document.querySelector('table').appendChild(newRow);
+    document.querySelector('tbody').appendChild(newRow);
 }
 
 document.querySelector('#new').addEventListener('click', () => {
@@ -36,9 +36,10 @@ document.querySelector('#new').addEventListener('click', () => {
 })
 
 document.querySelector('#sort').addEventListener('click', () => {
-    const rows = document.querySelectorAll('tr');
+    const rows = document.querySelectorAll('tbody tr');
     const data = [];
 
+    console.log(rows);
     for(let row of rows) {
         const initiative = row.querySelector('input[type="number"]').value;
         const name = row.querySelector('input[type="text"]').value;
@@ -51,7 +52,7 @@ document.querySelector('#sort').addEventListener('click', () => {
         return datum1.initiative - datum2.initiative;
     });
 
-    document.querySelector('table').innerHTML = "";
+    document.querySelector('tbody').innerHTML = "";
     for(let datum of sortedData){
         createRow(datum)
     }
